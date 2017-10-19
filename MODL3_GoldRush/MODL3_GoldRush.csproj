@@ -49,6 +49,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MODL3_GoldRush.process\MODL3_GoldRush.process.csproj">
+      <Project>{151c6f78-18ff-4643-bb54-ee335456b9ce}</Project>
+      <Name>MODL3_GoldRush.process</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
