@@ -44,6 +44,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MODL3_GoldRush.domain\MODL3_GoldRush.domain.csproj">
+      <Project>{f1015bb1-f4ab-4399-b533-aeee958ca6f5}</Project>
+      <Name>MODL3_GoldRush.domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MODL3_GoldRush.presentation\MODL3_GoldRush.presentation.csproj">
       <Project>{7319f6ef-d1f0-4011-8739-6c4858210135}</Project>
       <Name>MODL3_GoldRush.presentation</Name>
