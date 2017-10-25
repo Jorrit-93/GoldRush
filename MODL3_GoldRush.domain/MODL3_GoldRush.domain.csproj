@@ -43,9 +43,12 @@
     <Compile Include="Cart.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Hangar.cs" />
+    <Compile Include="InSwitch.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="OutSwitch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpaceTile.cs" />
+    <Compile Include="Switch.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Track.cs" />
   </ItemGroup>

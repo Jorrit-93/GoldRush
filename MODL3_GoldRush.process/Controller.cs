@@ -16,7 +16,6 @@ namespace MODL3_GoldRush.process
 		private OutputView _outView;
 		private Map _map;
         private Timer _timer;
-        private bool isRunning;
 
         public Controller()
 		{
@@ -24,7 +23,14 @@ namespace MODL3_GoldRush.process
 			_outView = new OutputView();
 			LoadMap(); //temp
 			CreateTimer(); //temp
-			Console.Read();
+            checkInput();
+        }
+
+        public void checkInput()
+        {
+            _inView.getSwitchInput();
+            Console.WriteLine("testtesttesttesttest");
+
         }
 
 		public void LoadMap()

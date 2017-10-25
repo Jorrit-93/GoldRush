@@ -76,7 +76,19 @@ namespace MODL3_GoldRush.domain
 				case '─':
 					newTile = new Track(Direction.Right, Direction.Left ,symbol);
 					return newTile;
-				default:
+                case '╔':
+                    newTile = new InSwitch(Direction.Up, Direction.Left, symbol);
+                    return newTile;
+                case '╚':
+                    newTile = new InSwitch(Direction.Down, Direction.Left, symbol);
+                    return newTile;
+                case '╝':
+                    newTile = new OutSwitch(Direction.Right, Direction.Up, symbol);
+                    return newTile;
+                case '╗':
+                    newTile = new OutSwitch(Direction.Right, Direction.Down, symbol);
+                return newTile;
+                default:
 					newTile = new SpaceTile(symbol);
 					return newTile;
 			}
