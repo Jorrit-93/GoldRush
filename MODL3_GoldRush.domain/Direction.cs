@@ -11,6 +11,7 @@ namespace MODL3_GoldRush.domain
 		Left,
 		Right,
 		Up,
-		Down
+		Down,
+		Null
 	}
 }

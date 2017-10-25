@@ -8,12 +8,14 @@ namespace MODL3_GoldRush.domain
 {
 	public abstract class Tile
 	{
-		private char _symbol;
+		public char _symbol;
 
 		public Tile leftTile	{ get; set; }
 		public Tile rightTile	{ get; set; }
 		public Tile upTile		{ get; set; }
 		public Tile downTile	{ get; set; }
+		public Cart _cart { get; set; }
+
 
 		public Tile(char symbol)
 		{
@@ -26,9 +28,6 @@ namespace MODL3_GoldRush.domain
 
 		public abstract void SwitchDirection(Direction d);
 
-		public char drawSymbol()
-		{
-			return _symbol;
-		}
+		public abstract char drawSymbol();
 	}
 }

@@ -8,6 +8,7 @@ namespace MODL3_GoldRush.domain
 {
 	public class Cart
 	{
+		public Tile tile { get; set; }
 		public char symbol { get; set; }
 
 		public Cart()

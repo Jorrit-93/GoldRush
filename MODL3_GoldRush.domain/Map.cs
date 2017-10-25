@@ -10,15 +10,30 @@ namespace MODL3_GoldRush.domain
 	{
 		private int _score;
 		private int _time;
-		public Tile _firstTile;
 
+		public List<Cart> cartList;
+		public List<Tile> hangarList;
+//		public List<Tile> switchList;
+
+		public Tile _firstTile;
 		public int _height;
 		public int _width;
 
 		public Map(int height, int width)
 		{
-			this._height = height;
-			this._width = width;
+			_height = height;
+			_width = width;
+			cartList = new List<Cart>();
+			hangarList = new List<Tile>();
+//			switchList = new List<Tile>();
+		}
+
+		public void CreateCart(int hangarIndex)
+		{
+			Cart newCart = new Cart();
+			hangarList[hangarIndex]._cart = newCart;
+			hangarList[hangarIndex].MoveCart();
+			cartList.Add(newCart);
 		}
 
 		public void CreateMap(string[] mapLines)
@@ -74,7 +89,11 @@ namespace MODL3_GoldRush.domain
 			switch (symbol)
 			{
 				case '─':
-					newTile = new Track(Direction.Right, Direction.Left ,symbol);
+					newTile = new Track(Direction.Right, Direction.Left, symbol);
+					return newTile;
+				case 'A':
+					newTile = new Hangar(Direction.Right, Direction.Left, symbol);
+					hangarList.Add(newTile);
 					return newTile;
                 case '╔':
                     newTile = new InSwitch(Direction.Up, Direction.Left, symbol);

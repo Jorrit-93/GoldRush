@@ -26,9 +26,9 @@ namespace MODL3_GoldRush.domain
 			throw new NotImplementedException();
 		}
 
-		public new char drawSymbol()
+		public override char drawSymbol()
 		{
-			return base.drawSymbol();
+			return _symbol;
 		}
 	}
 }
