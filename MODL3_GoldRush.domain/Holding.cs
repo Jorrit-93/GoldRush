@@ -11,5 +11,17 @@ namespace MODL3_GoldRush.domain
 		public Holding(Direction inDirection, Direction outDirection, char symbol) : base(inDirection, outDirection, symbol)
 		{
 		}
+
+		public override int AcceptCart(Track inputTrack)
+		{
+			inputTrack._cart.Unload();
+			return base.AcceptCart(inputTrack);
+		}
+
+		public override int MoveCart()
+		{
+			base.MoveCart();
+			return 1;
+		}
 	}
 }

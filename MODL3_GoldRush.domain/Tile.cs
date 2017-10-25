@@ -16,18 +16,19 @@ namespace MODL3_GoldRush.domain
 		public Tile downTile	{ get; set; }
 		public Cart _cart		{ get; set; }
 
-
 		public Tile(char symbol)
 		{
 			_symbol = symbol;
 		}
 
-		public abstract int AcceptCart(Track prevTrack);
+		public abstract int AcceptCart(Track inputTrack);
 
 		public abstract int MoveCart();
 
-		public abstract Direction SwitchDirection(Direction d);
-        public abstract void SwitchDirection();
+        public abstract void Switch();
+
+		public abstract Direction SwitchDirection(Direction inputDirection);
+
 		public abstract char drawSymbol();
 	}
 }

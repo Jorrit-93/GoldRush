@@ -6,34 +6,24 @@ using System.Threading.Tasks;
 
 namespace MODL3_GoldRush.domain
 {
-    public class OutSwitch : Switch
+    public class OutSwitch : BaseSwitch
     {
         public OutSwitch(Direction inDirection, Direction outDirection, char symbol) : base(inDirection, outDirection, symbol)
         {
-
         }
 
-        public override void SwitchDirection()
-        {
-            switch (_outDirection)
-            {
-                case Direction.Left:
-                    _outDirection = Direction.Right;
-                    Console.WriteLine(_symbol);
-                    break;
-                case Direction.Right:
-                    _outDirection = Direction.Left;
-                    Console.WriteLine(_symbol);
-                    break;
-                case Direction.Up:
-                    _outDirection = Direction.Down;
-                    Console.WriteLine(_symbol);
-                    break;
-                case Direction.Down:
-                    _outDirection = Direction.Up;
-                    Console.WriteLine(_symbol);
-                    break;
-            }
-        }
+        public override void Switch()
+		{
+			_outDirection = SwitchDirection(_outDirection);
+			switch (_symbol)
+			{
+				case '╝':
+					_symbol = '╗';
+					break;
+				case '╗':
+					_symbol = '╝';
+					break;
+			}
+		}
     }
 }

@@ -12,16 +12,22 @@ namespace MODL3_GoldRush.domain
 		{
 		}
 
-		public override int AcceptCart(Track prevTrack)
+		public override int AcceptCart(Track inputTrack)
 		{
-			return 0;
-		}
-		public override int MoveCart()
-		{
-			return 0;
+			return 1;
 		}
 
-		public override Direction SwitchDirection(Direction d)
+		public override int MoveCart()
+		{
+			throw new NotImplementedException();
+		}
+
+		public override void Switch()
+		{
+			throw new NotImplementedException();
+		}
+
+		public override Direction SwitchDirection(Direction inputDirection)
 		{
 			throw new NotImplementedException();
 		}
@@ -30,10 +36,5 @@ namespace MODL3_GoldRush.domain
 		{
 			return _symbol;
 		}
-
-        public override void SwitchDirection()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

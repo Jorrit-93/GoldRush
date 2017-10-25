@@ -11,5 +11,11 @@ namespace MODL3_GoldRush.domain
 		public Quay(Direction inDirection, Direction outDirection, char symbol) : base(inDirection, outDirection, symbol)
 		{
 		}
+
+		public override int AcceptCart(Track inputTrack)
+		{
+			inputTrack._cart.Unload();
+			return base.AcceptCart(inputTrack);
+		}
 	}
 }

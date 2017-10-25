@@ -18,42 +18,43 @@ namespace MODL3_GoldRush.process
 		private int timerInterval;
 		private int spawnInterval;
         private Timer _timer;
-        private bool isRunning;
 
         public Controller()
 		{
 			_inView = new InputView();
 			_outView = new OutputView();
-			LoadMap(); //
-			timerInterval = 500;
+			LoadMap(); //temp
+			timerInterval = 2000;
 			spawnInterval = 3;
 			CreateTimer(); //temp
-			Console.Read();
+			while (true)
+			{
+				Switch();
+			}
 		}
 
-        public int checkInput()
-        {
-            switch (_inView.getSwitchInput())
-            {
-                case 'a':
-                    return 0;
-                case 's':
-                    return 1;
-                case 'd':
-                    return 2;
-                case 'x':
-                    return 3;
-                case 'c':
-                    return 4;
-            }
-            return 5;
-        }
+		public void Switch()
+		{
+			_map.switchList[CheckInput()].Switch();
+		}
 
-        public void Switch()
+		public int CheckInput()
         {
-            Console.WriteLine("test");
-            _map.switchList[checkInput()].SwitchDirection();
-        }
+			switch (_inView.getSwitchInput())
+			{
+				case 'a':
+					return 0;
+				case 's':
+					return 1;
+				case 'd':
+					return 2;
+				case 'x':
+					return 3;
+				case 'c':
+					return 4;
+			}
+			return -1;
+		}
 
 		public void LoadMap()
 		{
@@ -62,7 +63,6 @@ namespace MODL3_GoldRush.process
 			mapLines = File.ReadAllLines(@Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Level" + nr + ".txt");
 			_map = new Map(mapLines.Length, mapLines[0].Length);
 			_map.CreateMap(mapLines);
-			DrawMap();
 		}
 
 		public void CreateTimer()
@@ -70,7 +70,6 @@ namespace MODL3_GoldRush.process
 			_timer = new Timer(timerInterval);
 			_timer.Elapsed += new ElapsedEventHandler(AfterTimer);
 			_timer.Enabled = true;
-            isRunning = true;
 			_timer.AutoReset = true;
 		}
 
@@ -96,8 +95,8 @@ namespace MODL3_GoldRush.process
 				_map.cartList.Remove(removeCart);
 			}
 			DrawMap();
+			Console.WriteLine("> Kies switch om aan te passen (A, S, D, X, C), q = stop");
 			_timer.Enabled = true;
-            isRunning = true;
 		}
 
 		public void SpawnCart(int interval)

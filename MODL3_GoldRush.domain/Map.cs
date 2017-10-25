@@ -114,6 +114,7 @@ namespace MODL3_GoldRush.domain
 					return newTile;
 				case '╔':
 					newTile = new InSwitch(Direction.Up, Direction.Right, symbol);
+					switchList.Add(newTile);
 					return newTile;
 				case '╚':
                     newTile = new InSwitch(Direction.Down, Direction.Right, symbol);
@@ -121,10 +122,11 @@ namespace MODL3_GoldRush.domain
                     return newTile;
                 case '╝':
                     newTile = new OutSwitch(Direction.Right, Direction.Up, symbol);
-                    switchList.Add(newTile);
+					switchList.Add(newTile);
                     return newTile;
                 case '╗':
                     newTile = new OutSwitch(Direction.Right, Direction.Down, symbol);
+					switchList.Add(newTile);
 					return newTile;
 				case 'A':
 				case 'B':

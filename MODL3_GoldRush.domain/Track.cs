@@ -13,20 +13,20 @@ namespace MODL3_GoldRush.domain
 			_outDirection = outDirection;
 		}
 
-		public override int AcceptCart(Track prevTrack)
+		public override int AcceptCart(Track inputTrack)
 		{
 			if (_cart == null)
 			{
-				if (prevTrack._cart.cartDirection.Equals(SwitchDirection(_outDirection)))
+				if (inputTrack._cart.cartDirection.Equals(SwitchDirection(_outDirection)))
 				{
 					Direction temp = _inDirection;
 					_inDirection = SwitchDirection(_outDirection);
 					_outDirection = SwitchDirection(temp);
 				}
-				if (prevTrack._cart.cartDirection.Equals(_inDirection))
+				if (inputTrack._cart.cartDirection.Equals(_inDirection))
 				{
-					Cart temp = prevTrack._cart;
-					prevTrack._cart = null;
+					Cart temp = inputTrack._cart;
+					inputTrack._cart = null;
 					temp.tile = this;
 					_cart = temp;
 					_cart.cartDirection = _outDirection;
@@ -79,6 +79,11 @@ namespace MODL3_GoldRush.domain
 			return Direction.Null;
 		}
 
+		public override void Switch()
+		{
+			throw new NotImplementedException();
+		}
+
 		public override char drawSymbol()
 		{
 			if(_cart != null)
@@ -87,9 +92,5 @@ namespace MODL3_GoldRush.domain
 			}
             return _symbol;
 		}
-
-        public override void SwitchDirection()
-        {
-        }
-    }
+	}
 }
