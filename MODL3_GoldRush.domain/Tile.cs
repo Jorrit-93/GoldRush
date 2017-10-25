@@ -14,7 +14,7 @@ namespace MODL3_GoldRush.domain
 		public Tile rightTile	{ get; set; }
 		public Tile upTile		{ get; set; }
 		public Tile downTile	{ get; set; }
-		public Cart _cart { get; set; }
+		public Cart _cart		{ get; set; }
 
 
 		public Tile(char symbol)
@@ -22,9 +22,9 @@ namespace MODL3_GoldRush.domain
 			_symbol = symbol;
 		}
 
-		public abstract bool AcceptCart(Track prevTrack);
+		public abstract int AcceptCart(Track prevTrack);
 
-		public abstract bool MoveCart();
+		public abstract int MoveCart();
 
 		public abstract Direction SwitchDirection(Direction d);
 

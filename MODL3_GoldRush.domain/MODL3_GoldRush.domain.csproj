@@ -41,13 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cart.cs" />
-    <Compile Include="Corner.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Hangar.cs" />
+    <Compile Include="Holding.cs" />
     <Compile Include="InSwitch.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="OutSwitch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quay.cs" />
     <Compile Include="SpaceTile.cs" />
     <Compile Include="Switch.cs" />
     <Compile Include="Tile.cs" />

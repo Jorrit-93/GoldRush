@@ -94,17 +94,28 @@ namespace MODL3_GoldRush.domain
 				case '│':
 					newTile = new Track(Direction.Up, Direction.Up, symbol);
 					return newTile;
-				case '┐':
-				newTile = new Track(Direction.Right, Direction.Down, symbol);
-				return newTile;
-				case 'A':
-					newTile = new Hangar(Direction.Null, Direction.Right, symbol);
-					hangarList.Add(newTile);
+				case '┌':
+					newTile = new Track(Direction.Up, Direction.Right, symbol);
 					return newTile;
-                case '╔':
-                    newTile = new InSwitch(Direction.Up, Direction.Right, symbol);
-                    return newTile;
-                case '╚':
+				case '└':
+					newTile = new Track(Direction.Down, Direction.Right, symbol);
+					return newTile;
+				case '┘':
+					newTile = new Track(Direction.Right, Direction.Up, symbol);
+					return newTile;
+				case '┐':
+					newTile = new Track(Direction.Right, Direction.Down, symbol);
+					return newTile;
+				case 'K':
+					newTile = new Quay(Direction.Right, Direction.Right, symbol);
+					return newTile;
+				case '═':
+					newTile = new Holding(Direction.Right, Direction.Right, symbol);
+					return newTile;
+				case '╔':
+					newTile = new InSwitch(Direction.Up, Direction.Right, symbol);
+					return newTile;
+				case '╚':
                     newTile = new InSwitch(Direction.Down, Direction.Right, symbol);
                     return newTile;
                 case '╝':
@@ -112,8 +123,14 @@ namespace MODL3_GoldRush.domain
                     return newTile;
                 case '╗':
                     newTile = new OutSwitch(Direction.Right, Direction.Down, symbol);
-                return newTile;
-                default:
+					return newTile;
+				case 'A':
+				case 'B':
+				case 'C':
+					newTile = new Hangar(Direction.Null, Direction.Right, symbol);
+					hangarList.Add(newTile);
+					return newTile;
+				default:
 					newTile = new SpaceTile(symbol);
 					return newTile;
 			}

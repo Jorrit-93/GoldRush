@@ -15,24 +15,20 @@ namespace MODL3_GoldRush.process
 		private InputView _inView;
 		private OutputView _outView;
 		private Map _map;
+		private int timerInterval;
+		private int spawnInterval;
         private Timer _timer;
 
         public Controller()
 		{
 			_inView = new InputView();
 			_outView = new OutputView();
-			LoadMap(); //temp
-			int millisec = 1000;
-			CreateTimer(millisec); //temp
+			LoadMap(); //
+			timerInterval = 500;
+			spawnInterval = 3;
+			CreateTimer(); //temp
 			Console.Read();
 		}
-
-        public void checkInput()
-        {
-            _inView.getSwitchInput();
-            Console.WriteLine("testtesttesttesttest");
-
-        }
 
 		public void LoadMap()
 		{
@@ -44,9 +40,9 @@ namespace MODL3_GoldRush.process
 			DrawMap();
 		}
 
-		public void CreateTimer(int millisec)
+		public void CreateTimer()
 		{
-			_timer = new Timer(millisec);
+			_timer = new Timer(timerInterval);
 			_timer.Elapsed += new ElapsedEventHandler(AfterTimer);
 			_timer.Enabled = true;
 			_timer.AutoReset = true;
@@ -55,18 +51,35 @@ namespace MODL3_GoldRush.process
 		public void AfterTimer(Object sender, ElapsedEventArgs e)
 		{
 			_timer.Enabled = false;
-			Random rnd = new Random(); //temp
-			int cartSpawn = rnd.Next(1, 3);
-			if (cartSpawn == 1)
-			{
-				_map.CreateCart(0); //temp index
-			}
+			SpawnCart(spawnInterval);
+			Cart removeCart = null;
 			foreach (Cart c in _map.cartList)
 			{
-				c.tile.MoveCart();
+				switch (c.tile.MoveCart())
+				{
+					case -1:
+						//gameover
+						break;
+					case 0:
+						removeCart = c;
+						break;
+				}
+			}
+			if(removeCart != null)
+			{
+				_map.cartList.Remove(removeCart);
 			}
 			DrawMap();
 			_timer.Enabled = true;
+		}
+
+		public void SpawnCart(int interval)
+		{
+			Random random = new Random();
+			if (random.Next(0, interval) == 1)
+			{
+				_map.CreateCart(random.Next(0, _map.hangarList.Count));
+			}
 		}
 
 		public void DrawMap()

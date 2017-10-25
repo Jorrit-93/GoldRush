@@ -13,41 +13,54 @@ namespace MODL3_GoldRush.domain
 			_outDirection = outDirection;
 		}
 
-		public override bool AcceptCart(Track prevTrack)
+		public override int AcceptCart(Track prevTrack)
 		{
-			if (prevTrack._cart.cartDirection.Equals(SwitchDirection(_inDirection)) || prevTrack._cart.cartDirection.Equals(SwitchDirection(_outDirection)))
+			if (_cart == null)
 			{
-				_inDirection = SwitchDirection(_inDirection);
-				_outDirection = SwitchDirection(_inDirection);
+				if (prevTrack._cart.cartDirection.Equals(SwitchDirection(_outDirection)))
+				{
+					Direction temp = _inDirection;
+					_inDirection = SwitchDirection(_outDirection);
+					_outDirection = SwitchDirection(temp);
+				}
+				if (prevTrack._cart.cartDirection.Equals(_inDirection))
+				{
+					Cart temp = prevTrack._cart;
+					prevTrack._cart = null;
+					temp.tile = this;
+					_cart = temp;
+					_cart.cartDirection = _outDirection;
+					return 1;
+				}
+				return 0;
 			}
-			if (prevTrack._cart.cartDirection.Equals(_inDirection) && _cart == null)
-			{
-				Cart temp = prevTrack._cart;
-				prevTrack._cart = null;
-				temp.tile = this;
-				_cart = temp;
-				_cart.cartDirection = _outDirection;
-				return true;
-			}
-			return false;
+			return -1;
 		}
 
-		public override bool MoveCart()
+		public override int MoveCart()
 		{
+			Tile nextTile = null;
 			switch (_cart.cartDirection)
 			{
 				case Direction.Left:
-					return leftTile.AcceptCart(this);
+					nextTile = leftTile;
+					break;
 				case Direction.Right:
-					return rightTile.AcceptCart(this);
+					nextTile = rightTile;
+					break;
 				case Direction.Up:
-					return upTile.AcceptCart(this);
+					nextTile = upTile;
+					break;
 				case Direction.Down:
-					return downTile.AcceptCart(this);
-//				case Direction.Null:
-//					return true;
+					nextTile = downTile;
+					break;
 			}
-			return false;
+			if(nextTile != null)
+			{
+				return nextTile.AcceptCart(this);
+			}
+			_cart = null;
+			return 0;
 		}
 
 		public override Direction SwitchDirection(Direction d)

@@ -12,13 +12,13 @@ namespace MODL3_GoldRush.domain
 		{
 		}
 
-		public override bool AcceptCart(Track prevTrack)
+		public override int AcceptCart(Track prevTrack)
 		{
-			throw new NotImplementedException();
+			return 0;
 		}
-		public override bool MoveCart()
+		public override int MoveCart()
 		{
-			throw new NotImplementedException();
+			return 0;
 		}
 
 		public override Direction SwitchDirection(Direction d)
