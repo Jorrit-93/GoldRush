@@ -11,5 +11,24 @@ namespace MODL3_GoldRush.domain
 		public SpaceTile(char symbol) : base(symbol)
 		{
 		}
+
+		public override bool AcceptCart(Track prevTrack)
+		{
+			throw new NotImplementedException();
+		}
+		public override bool MoveCart()
+		{
+			throw new NotImplementedException();
+		}
+
+		public override void SwitchDirection(Direction d)
+		{
+			throw new NotImplementedException();
+		}
+
+		public new char drawSymbol()
+		{
+			return base.drawSymbol();
+		}
 	}
 }

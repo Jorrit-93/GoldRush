@@ -25,7 +25,7 @@ namespace MODL3_GoldRush.process
 		public void LoadMap()
 		{
 			string[] mapLines;
-			int nr = 1; //temp
+			int nr = 0; //temp
 			mapLines = File.ReadAllLines(@Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Level" + nr + ".txt");
 			_map = new Map(mapLines.Length, mapLines[0].Length);
 			_map.CreateMap(mapLines);
