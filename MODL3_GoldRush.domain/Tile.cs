@@ -20,6 +20,12 @@ namespace MODL3_GoldRush.domain
 			_symbol = symbol;
 		}
 
+		public abstract bool AcceptCart(Track prevTrack);
+
+		public abstract bool MoveCart();
+
+		public abstract void SwitchDirection(Direction d);
+
 		public char drawSymbol()
 		{
 			return _symbol;
