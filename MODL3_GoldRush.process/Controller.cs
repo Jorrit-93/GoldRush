@@ -24,10 +24,10 @@ namespace MODL3_GoldRush.process
 			_inView = new InputView();
 			_outView = new OutputView();
 			LoadMap(); //temp
-			timerInterval = 2000;
-			spawnInterval = 3;
+			timerInterval = 2000; //temp
+			spawnInterval = 3; //temp
 			CreateTimer(); //temp
-			while (true)
+			while (true) //temp
 			{
 				Switch();
 			}
@@ -35,7 +35,12 @@ namespace MODL3_GoldRush.process
 
 		public void Switch()
 		{
-			_map.switchList[CheckInput()].Switch();
+			int hangarIndex = CheckInput();
+			if (_map.switchList[hangarIndex]._cart == null)
+			{
+				_map.switchList[hangarIndex].Switch();
+			}
+			DrawMap();
 		}
 
 		public int CheckInput()
@@ -95,7 +100,6 @@ namespace MODL3_GoldRush.process
 				_map.cartList.Remove(removeCart);
 			}
 			DrawMap();
-			Console.WriteLine("> Kies switch om aan te passen (A, S, D, X, C), q = stop");
 			_timer.Enabled = true;
 		}
 
@@ -127,6 +131,7 @@ namespace MODL3_GoldRush.process
 				}
 				Console.WriteLine();
 			}
+			Console.WriteLine("> Kies switch om aan te passen (A, S, D, X, C), q = stop");
 		}
     }
 }
