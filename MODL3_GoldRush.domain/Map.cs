@@ -75,7 +75,7 @@ namespace MODL3_GoldRush.domain
 			{
 				case '─':
 					newTile = new Track(symbol);
-					newTile.AcceptCart()
+                    newTile.AcceptCart()
 					return newTile;
 				default:
 					newTile = new SpaceTile(symbol);

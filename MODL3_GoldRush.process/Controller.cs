@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using MODL3_GoldRush.presentation;
 using MODL3_GoldRush.domain;
+using System.Timers;
 
 namespace MODL3_GoldRush.process
 {
@@ -14,13 +15,21 @@ namespace MODL3_GoldRush.process
 		private InputView _inView;
 		private OutputView _outView;
 		private Map _map;
+        private Timer timer;
+        private bool isRunning;
 
-		public Controller()
+        public Controller()
 		{
 			_inView = new InputView();
 			_outView = new OutputView();
 			LoadMap(); //temp
-		}
+            timer = new Timer(10000);
+
+            timer.Elapsed += new ElapsedEventHandler(AfterTimer);
+            timer.Enabled = true;
+            timer.AutoReset = true;
+            DuringTimer();
+        }
 
 		public void LoadMap()
 		{
@@ -53,5 +62,21 @@ namespace MODL3_GoldRush.process
 				Console.WriteLine();
 			}
 		}
-	}
+
+        public void DuringTimer()
+        {
+            timer.Start();
+            isRunning = true;
+            while (isRunning)
+            {
+                //swtiches aanpassen
+            }
+        }
+
+        public void AfterTimer(Object sender, ElapsedEventArgs e)
+        {
+            Console.WriteLine("Alles wat er na timer moet gebeuren, zoals move cart/unload cart etc");
+        }
+
+    }
 }
