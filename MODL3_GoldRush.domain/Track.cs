@@ -4,6 +4,7 @@ namespace MODL3_GoldRush.domain
 {
 	public class Track : Tile
 	{
+		protected Cart _cart = new Cart();
 		protected Direction _inDirection;
 		protected Direction _outDirection;
 
@@ -72,7 +73,11 @@ namespace MODL3_GoldRush.domain
 			{
 				return _cart.symbol;
 			}
-			return _symbol;
 		}
-	}
+
+        public override void SwitchDirection()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -12,5 +12,24 @@ namespace MODL3_GoldRush.domain
         {
             
         }
+
+        public override void SwitchDirection()
+        {
+            switch (_inDirection)
+            {
+                case Direction.Left:
+                    _inDirection = Direction.Right;
+                    break;
+                case Direction.Right:
+                    _inDirection = Direction.Left;
+                    break;
+                case Direction.Up:
+                    _inDirection = Direction.Down;
+                    break;
+                case Direction.Down:
+                    _inDirection = Direction.Up;
+                    break;
+            }
+        }
     }
 }

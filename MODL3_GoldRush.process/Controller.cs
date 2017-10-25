@@ -27,11 +27,27 @@ namespace MODL3_GoldRush.process
 			Console.Read();
 		}
 
-        public void checkInput()
+        public int checkInput()
         {
-            _inView.getSwitchInput();
-            Console.WriteLine("testtesttesttesttest");
+            switch (_inView.getSwitchInput())
+            {
+                case 'a':
+                    return 0;
+                case 's':
+                    return 1;
+                case 'd':
+                    return 2;
+                case 'x':
+                    return 3;
+                case 'c':
+                    return 4;
+            }
+            return 5;
+        }
 
+        public void Switch()
+        {
+            _map.switchList[checkInput()].SwitchDirection();
         }
 
 		public void LoadMap()

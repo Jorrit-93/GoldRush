@@ -10,6 +10,7 @@ namespace MODL3_GoldRush.domain
     {
         private char symbol { get; set; }
 
+
         public Switch(Direction inDirection, Direction outDirection, char symbol) : base(inDirection, outDirection, symbol)
         {
             this.symbol = symbol;

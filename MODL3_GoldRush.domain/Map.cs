@@ -13,7 +13,7 @@ namespace MODL3_GoldRush.domain
 
 		public List<Cart> cartList;
 		public List<Tile> hangarList;
-//		public List<Tile> switchList;
+		public List<Tile> switchList;
 
 		public Tile _firstTile;
 		public int _height;
@@ -25,7 +25,7 @@ namespace MODL3_GoldRush.domain
 			_width = width;
 			cartList = new List<Cart>();
 			hangarList = new List<Tile>();
-//			switchList = new List<Tile>();
+			switchList = new List<Tile>();
 		}
 
 		public void CreateCart(int hangarIndex)
@@ -102,17 +102,21 @@ namespace MODL3_GoldRush.domain
 					hangarList.Add(newTile);
 					return newTile;
                 case '╔':
-                    newTile = new InSwitch(Direction.Up, Direction.Right, symbol);
+                    newTile = new InSwitch(Direction.Up, Direction.Left, symbol);
+                    switchList.Add(newTile);
                     return newTile;
                 case '╚':
-                    newTile = new InSwitch(Direction.Down, Direction.Right, symbol);
+                    newTile = new InSwitch(Direction.Down, Direction.Left, symbol);
+                    switchList.Add(newTile);
                     return newTile;
                 case '╝':
                     newTile = new OutSwitch(Direction.Right, Direction.Up, symbol);
+                    switchList.Add(newTile);
                     return newTile;
                 case '╗':
                     newTile = new OutSwitch(Direction.Right, Direction.Down, symbol);
-                return newTile;
+                    switchList.Add(newTile);
+                    return newTile;
                 default:
 					newTile = new SpaceTile(symbol);
 					return newTile;
