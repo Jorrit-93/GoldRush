@@ -85,7 +85,11 @@ namespace MODL3_GoldRush.domain
 			{
 				return _cart.symbol;
 			}
-			return _symbol;
+            return _symbol;
 		}
-	}
+
+        public override void SwitchDirection()
+        {
+        }
+    }
 }

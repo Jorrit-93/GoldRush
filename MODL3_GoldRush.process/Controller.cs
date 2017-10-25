@@ -18,6 +18,7 @@ namespace MODL3_GoldRush.process
 		private int timerInterval;
 		private int spawnInterval;
         private Timer _timer;
+        private bool isRunning;
 
         public Controller()
 		{
@@ -29,6 +30,30 @@ namespace MODL3_GoldRush.process
 			CreateTimer(); //temp
 			Console.Read();
 		}
+
+        public int checkInput()
+        {
+            switch (_inView.getSwitchInput())
+            {
+                case 'a':
+                    return 0;
+                case 's':
+                    return 1;
+                case 'd':
+                    return 2;
+                case 'x':
+                    return 3;
+                case 'c':
+                    return 4;
+            }
+            return 5;
+        }
+
+        public void Switch()
+        {
+            Console.WriteLine("test");
+            _map.switchList[checkInput()].SwitchDirection();
+        }
 
 		public void LoadMap()
 		{
@@ -45,6 +70,7 @@ namespace MODL3_GoldRush.process
 			_timer = new Timer(timerInterval);
 			_timer.Elapsed += new ElapsedEventHandler(AfterTimer);
 			_timer.Enabled = true;
+            isRunning = true;
 			_timer.AutoReset = true;
 		}
 
@@ -71,6 +97,7 @@ namespace MODL3_GoldRush.process
 			}
 			DrawMap();
 			_timer.Enabled = true;
+            isRunning = true;
 		}
 
 		public void SpawnCart(int interval)

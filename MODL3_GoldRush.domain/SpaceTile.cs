@@ -30,5 +30,10 @@ namespace MODL3_GoldRush.domain
 		{
 			return _symbol;
 		}
-	}
+
+        public override void SwitchDirection()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
