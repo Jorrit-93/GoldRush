@@ -19,15 +19,19 @@ namespace MODL3_GoldRush.domain
             {
                 case Direction.Left:
                     _outDirection = Direction.Right;
+                    Console.WriteLine(_symbol);
                     break;
                 case Direction.Right:
                     _outDirection = Direction.Left;
+                    Console.WriteLine(_symbol);
                     break;
                 case Direction.Up:
                     _outDirection = Direction.Down;
+                    Console.WriteLine(_symbol);
                     break;
                 case Direction.Down:
                     _outDirection = Direction.Up;
+                    Console.WriteLine(_symbol);
                     break;
             }
         }

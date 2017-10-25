@@ -16,6 +16,7 @@ namespace MODL3_GoldRush.process
 		private OutputView _outView;
 		private Map _map;
         private Timer _timer;
+        private bool isRunning;
 
         public Controller()
 		{
@@ -24,7 +25,11 @@ namespace MODL3_GoldRush.process
 			LoadMap(); //temp
 			int millisec = 1000;
 			CreateTimer(millisec); //temp
-			Console.Read();
+            while (isRunning)
+            {
+                Switch();
+            }
+            Console.Read();
 		}
 
         public int checkInput()
@@ -47,6 +52,7 @@ namespace MODL3_GoldRush.process
 
         public void Switch()
         {
+            Console.WriteLine("test");
             _map.switchList[checkInput()].SwitchDirection();
         }
 
@@ -65,12 +71,14 @@ namespace MODL3_GoldRush.process
 			_timer = new Timer(millisec);
 			_timer.Elapsed += new ElapsedEventHandler(AfterTimer);
 			_timer.Enabled = true;
+            isRunning = true;
 			_timer.AutoReset = true;
 		}
 
 		public void AfterTimer(Object sender, ElapsedEventArgs e)
 		{
 			_timer.Enabled = false;
+            isRunning = false;
 			Random rnd = new Random(); //temp
 			int cartSpawn = rnd.Next(1, 3);
 			if (cartSpawn == 1)
@@ -83,6 +91,7 @@ namespace MODL3_GoldRush.process
 			}
 			DrawMap();
 			_timer.Enabled = true;
+            isRunning = true;
 		}
 
 		public void DrawMap()
