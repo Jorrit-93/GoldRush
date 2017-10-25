@@ -31,8 +31,8 @@ namespace MODL3_GoldRush.domain
 		public void CreateCart(int hangarIndex)
 		{
 			Cart newCart = new Cart();
+			newCart.tile = hangarList[hangarIndex];
 			hangarList[hangarIndex]._cart = newCart;
-			hangarList[hangarIndex].MoveCart();
 			cartList.Add(newCart);
 		}
 
@@ -89,17 +89,23 @@ namespace MODL3_GoldRush.domain
 			switch (symbol)
 			{
 				case '─':
-					newTile = new Track(Direction.Right, Direction.Left, symbol);
+					newTile = new Track(Direction.Right, Direction.Right, symbol);
 					return newTile;
+				case '│':
+					newTile = new Track(Direction.Up, Direction.Up, symbol);
+					return newTile;
+				case '┐':
+				newTile = new Track(Direction.Right, Direction.Down, symbol);
+				return newTile;
 				case 'A':
-					newTile = new Hangar(Direction.Right, Direction.Left, symbol);
+					newTile = new Hangar(Direction.Null, Direction.Right, symbol);
 					hangarList.Add(newTile);
 					return newTile;
                 case '╔':
-                    newTile = new InSwitch(Direction.Up, Direction.Left, symbol);
+                    newTile = new InSwitch(Direction.Up, Direction.Right, symbol);
                     return newTile;
                 case '╚':
-                    newTile = new InSwitch(Direction.Down, Direction.Left, symbol);
+                    newTile = new InSwitch(Direction.Down, Direction.Right, symbol);
                     return newTile;
                 case '╝':
                     newTile = new OutSwitch(Direction.Right, Direction.Up, symbol);

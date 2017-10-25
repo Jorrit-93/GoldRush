@@ -26,7 +26,7 @@ namespace MODL3_GoldRush.domain
 
 		public abstract bool MoveCart();
 
-		public abstract void SwitchDirection(Direction d);
+		public abstract Direction SwitchDirection(Direction d);
 
 		public abstract char drawSymbol();
 	}

@@ -15,12 +15,18 @@ namespace MODL3_GoldRush.domain
 
 		public override bool AcceptCart(Track prevTrack)
 		{
-			if (prevTrack._outDirection.Equals(_inDirection) && _cart == null)
+			if (prevTrack._cart.cartDirection.Equals(SwitchDirection(_inDirection)) || prevTrack._cart.cartDirection.Equals(SwitchDirection(_outDirection)))
+			{
+				_inDirection = SwitchDirection(_inDirection);
+				_outDirection = SwitchDirection(_inDirection);
+			}
+			if (prevTrack._cart.cartDirection.Equals(_inDirection) && _cart == null)
 			{
 				Cart temp = prevTrack._cart;
 				prevTrack._cart = null;
 				temp.tile = this;
 				_cart = temp;
+				_cart.cartDirection = _outDirection;
 				return true;
 			}
 			return false;
@@ -28,39 +34,36 @@ namespace MODL3_GoldRush.domain
 
 		public override bool MoveCart()
 		{
-			switch (_outDirection)
+			switch (_cart.cartDirection)
 			{
 				case Direction.Left:
-					return rightTile.AcceptCart(this);
-				case Direction.Right:
 					return leftTile.AcceptCart(this);
+				case Direction.Right:
+					return rightTile.AcceptCart(this);
 				case Direction.Up:
-					return downTile.AcceptCart(this);
-				case Direction.Down:
 					return upTile.AcceptCart(this);
-				case Direction.Null:
-					return true;
+				case Direction.Down:
+					return downTile.AcceptCart(this);
+//				case Direction.Null:
+//					return true;
 			}
 			return false;
 		}
 
-		public override void SwitchDirection(Direction d)
+		public override Direction SwitchDirection(Direction d)
 		{
 			switch (d)
 			{
 				case Direction.Left:
-					d = Direction.Right;
-					break;
+					return Direction.Right;
 				case Direction.Right:
-					d = Direction.Left;
-					break;
+					return Direction.Left;
 				case Direction.Up:
-					d = Direction.Down;
-					break;
+					return Direction.Down;
 				case Direction.Down:
-					d = Direction.Up;
-					break;
+					return Direction.Up;
 			}
+			return Direction.Null;
 		}
 
 		public override char drawSymbol()

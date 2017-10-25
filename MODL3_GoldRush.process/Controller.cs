@@ -57,13 +57,13 @@ namespace MODL3_GoldRush.process
 			_timer.Enabled = false;
 			Random rnd = new Random(); //temp
 			int cartSpawn = rnd.Next(1, 3);
-			foreach (Cart c in _map.cartList)
-			{
-				c.tile.MoveCart();
-			}
 			if (cartSpawn == 1)
 			{
 				_map.CreateCart(0); //temp index
+			}
+			foreach (Cart c in _map.cartList)
+			{
+				c.tile.MoveCart();
 			}
 			DrawMap();
 			_timer.Enabled = true;

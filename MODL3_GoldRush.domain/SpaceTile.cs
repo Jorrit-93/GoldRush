@@ -21,7 +21,7 @@ namespace MODL3_GoldRush.domain
 			throw new NotImplementedException();
 		}
 
-		public override void SwitchDirection(Direction d)
+		public override Direction SwitchDirection(Direction d)
 		{
 			throw new NotImplementedException();
 		}
