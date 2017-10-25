@@ -10,13 +10,6 @@ namespace MODL3_GoldRush.domain
 	{
 		public Hangar(Direction inDirection, Direction outDirection, char symbol) : base(inDirection, outDirection, symbol)
 		{
-
-		}
-
-		public override bool MoveCart()
-		{
-			_cart = new Cart();
-			return base.MoveCart();
 		}
 	}
 }

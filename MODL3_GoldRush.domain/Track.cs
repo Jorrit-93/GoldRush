@@ -4,7 +4,6 @@ namespace MODL3_GoldRush.domain
 {
 	public class Track : Tile
 	{
-		protected Cart _cart = new Cart();
 		protected Direction _inDirection;
 		protected Direction _outDirection;
 
@@ -16,14 +15,12 @@ namespace MODL3_GoldRush.domain
 
 		public override bool AcceptCart(Track prevTrack)
 		{
-			if (prevTrack._outDirection.Equals(_outDirection))
-			{
-				Direction temp = _inDirection;
-				_inDirection = _outDirection;
-				_outDirection = temp;
-			}
 			if (prevTrack._outDirection.Equals(_inDirection) && _cart == null)
 			{
+				Cart temp = prevTrack._cart;
+				prevTrack._cart = null;
+				temp.tile = this;
+				_cart = temp;
 				return true;
 			}
 			return false;
@@ -41,6 +38,8 @@ namespace MODL3_GoldRush.domain
 					return downTile.AcceptCart(this);
 				case Direction.Down:
 					return upTile.AcceptCart(this);
+				case Direction.Null:
+					return true;
 			}
 			return false;
 		}
@@ -64,13 +63,13 @@ namespace MODL3_GoldRush.domain
 			}
 		}
 
-		public new char drawSymbol()
+		public override char drawSymbol()
 		{
 			if(_cart != null)
 			{
 				return _cart.symbol;
 			}
-			return base.drawSymbol();
+			return _symbol;
 		}
 	}
 }

@@ -16,16 +16,16 @@ namespace MODL3_GoldRush.process
 		private OutputView _outView;
 		private Map _map;
         private Timer _timer;
-        private bool isRunning;
 
         public Controller()
 		{
 			_inView = new InputView();
 			_outView = new OutputView();
 			LoadMap(); //temp
-			CreateTimer(); //temp
+			int millisec = 1000;
+			CreateTimer(millisec); //temp
 			Console.Read();
-        }
+		}
 
 		public void LoadMap()
 		{
@@ -34,11 +34,12 @@ namespace MODL3_GoldRush.process
 			mapLines = File.ReadAllLines(@Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Level" + nr + ".txt");
 			_map = new Map(mapLines.Length, mapLines[0].Length);
 			_map.CreateMap(mapLines);
+			DrawMap();
 		}
 
-		public void CreateTimer()
+		public void CreateTimer(int millisec)
 		{
-			_timer = new Timer(1000);
+			_timer = new Timer(millisec);
 			_timer.Elapsed += new ElapsedEventHandler(AfterTimer);
 			_timer.Enabled = true;
 			_timer.AutoReset = true;
@@ -46,7 +47,19 @@ namespace MODL3_GoldRush.process
 
 		public void AfterTimer(Object sender, ElapsedEventArgs e)
 		{
+			_timer.Enabled = false;
+			Random rnd = new Random(); //temp
+			int cartSpawn = rnd.Next(1, 3);
+			foreach (Cart c in _map.cartList)
+			{
+				c.tile.MoveCart();
+			}
+			if (cartSpawn == 1)
+			{
+				_map.CreateCart(0); //temp index
+			}
 			DrawMap();
+			_timer.Enabled = true;
 		}
 
 		public void DrawMap()
