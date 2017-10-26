@@ -19,8 +19,9 @@ namespace MODL3_GoldRush.process
 		private int _spawnInterval;
 
 		private bool _getInput;
+		private bool _drawing;
 
-        private Timer _cartTimer;
+		private Timer _cartTimer;
 		private int _cartTimerInterval;
 
 		private Timer _shipTimer;
@@ -33,8 +34,8 @@ namespace MODL3_GoldRush.process
 		{
 			_inView = new InputView();
 			_outView = new OutputView();
-			LoadMap(); //temp
-			_cartTimerInterval = 2000; //temp
+			LoadMap();  
+			_cartTimerInterval = 2000;  
 			_shipTimerInterval = 500;
 			_timeTimerInterval = 1000;
 
@@ -43,16 +44,16 @@ namespace MODL3_GoldRush.process
 			_getInput = true;
 
 			_shipMoving = 0;
-			_spawnInterval = 3; //temp
+			_spawnInterval = 3;  
 
-			CreateCartTimer(); //temp
-			CreateShipTimer(); //temp
-			CreateTimeTimer(); //temp
+			CreateCartTimer();  
+			CreateShipTimer();  
+			CreateTimeTimer();  
 
 			_cartTimer.Enabled = true;
 			_timeTimer.Enabled = true;
 
-			while (_getInput) //temp
+			while (_getInput)  
 			{
 				Switch();
 			}
@@ -65,11 +66,14 @@ namespace MODL3_GoldRush.process
 			{
 				_map.switchList[hangarIndex].Switch();
 			}
-			DrawMap();
+			if (!_drawing)
+			{
+				DrawMap();
+			}
 		}
 
 		public int CheckInput()
-        {
+		{
 			switch (_inView.getSwitchInput())
 			{
 				case 'a':
@@ -89,7 +93,7 @@ namespace MODL3_GoldRush.process
 		public void LoadMap()
 		{
 			string[] mapLines;
-			int nr = 1; //temp
+			int nr = 1;  
 			mapLines = File.ReadAllLines(@Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Level" + nr + ".txt");
 			_map = new Map(mapLines.Length, mapLines[0].Length);
 			_map.CreateMap(mapLines);
@@ -167,11 +171,14 @@ namespace MODL3_GoldRush.process
 						break;
 				}
 			}
-			if(removeCart != null)
+			if (removeCart != null)
 			{
 				_map.cartList.Remove(removeCart);
 			}
-			DrawMap();
+			if (!_drawing)
+			{
+				DrawMap();
+			}
 			_cartTimer.Enabled = true;
 			if (gameOver)
 			{
@@ -182,7 +189,7 @@ namespace MODL3_GoldRush.process
 		public void AfterShipTimer(Object sender, ElapsedEventArgs e)
 		{
 			_shipTimer.Enabled = false;
-			for(int index = 0; index < _map.shipArray.Length; index++)
+			for (int index = 0; index < _map.shipArray.Length; index++)
 			{
 				switch (_map.shipArray[index].tile.MoveMovable())
 				{
@@ -190,16 +197,19 @@ namespace MODL3_GoldRush.process
 						_map.shipArray[index].tile.movable = null;
 						_map.shipArray[index].tile = _map._firstTile;
 						_map._firstTile.movable = _map.shipArray[index];
-						if(index == 2)
+						if (index == 2)
 						{
 							_map.shipArray[index].Unload();
 						}
 						break;
 				}
 			}
-			DrawMap();
 			_shipTimer.Enabled = true;
 			_shipMoving++;
+			if (!_drawing)
+			{
+				DrawMap();
+			}
 			if (_shipMoving == _map._width)
 			{
 				_shipMoving = 0;
@@ -210,11 +220,14 @@ namespace MODL3_GoldRush.process
 		public void AfterTimeTimer(Object sender, ElapsedEventArgs e)
 		{
 			_map.time--;
-			if(_map.time == 0)
+			if (_map.time == 0)
 			{
 				_map.time = _cartTimerInterval / 1000;
 			}
-			DrawMap();
+			if (!_drawing)
+			{
+				DrawMap();
+			}
 		}
 
 		public void SpawnCart(int interval)
@@ -228,9 +241,10 @@ namespace MODL3_GoldRush.process
 
 		public void DrawMap()
 		{
+			_drawing = true;
 			Console.Clear();
 			string header = _map.time.ToString();
-			for(int index = 0; index < (_map._width - _map.time.ToString().Length - _map.score.ToString().Length); index++)
+			for (int index = 0; index < (_map._width - _map.time.ToString().Length - _map.score.ToString().Length); index++)
 			{
 				header = string.Concat(header, " ");
 			}
@@ -239,7 +253,7 @@ namespace MODL3_GoldRush.process
 			Console.WriteLine();
 			Tile firstRowTile = _map._firstTile;
 			Tile secondRowTile = _map._firstTile.downTile;
-			for (int i = 0; i <_map._height; i++)
+			for (int i = 0; i < _map._height; i++)
 			{
 				for (int j = 0; j < _map._width; j++)
 				{
@@ -254,6 +268,7 @@ namespace MODL3_GoldRush.process
 				Console.WriteLine();
 			}
 			Console.WriteLine("> Kies switch om aan te passen (A, S, D, X, C), q = stop");
+			_drawing = false;
 		}
-    }
+	}
 }
