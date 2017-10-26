@@ -8,17 +8,19 @@ namespace MODL3_GoldRush.domain
 {
 	public class Map
 	{
-		private int _score;
-		private int _time;
-
 		public List<Cart> cartList;
 		public List<Tile> hangarList;
 		public List<Tile> switchList;
+		public Ship[] shipArray;
+		private int shipIndex;
 
 		public Tile _firstTile;
-        public Ship _ship;
 		public int _height;
 		public int _width;
+
+		public int score { get; set; }
+		public int time { get; set; }
+		public int shipLoad { get; set; }
 
 		public Map(int height, int width)
 		{
@@ -27,8 +29,10 @@ namespace MODL3_GoldRush.domain
 			cartList = new List<Cart>();
 			hangarList = new List<Tile>();
 			switchList = new List<Tile>();
-            _ship = new Ship();
-		}
+			shipArray = new Ship[5];
+			shipIndex = 4;
+			shipLoad = 0;
+	}
 
 		public void CreateCart(int hangarIndex)
 		{
@@ -38,15 +42,12 @@ namespace MODL3_GoldRush.domain
 			cartList.Add(newCart);
 		}
 
-		public void AddScore()
+		public void CreateShip(char symbol, Tile newTile)
 		{
-			_score++;
-//			_ship.load++;
-//			if(_ship.load == 8)
-//			{
-//				_ship.LeaveQuay();
-//				_score = _score + 10;
-//			}
+			Ship newShip = new Ship(symbol);
+			newShip.tile = newTile;
+			newTile.movable = newShip;
+			shipArray[shipIndex--] = newShip;
 		}
 
 		public void CreateMap(string[] mapLines)
@@ -101,6 +102,7 @@ namespace MODL3_GoldRush.domain
 			Tile newTile;
 			switch (symbol)
 			{
+				case '~':
 				case '─':
 					newTile = new Track(Direction.Right, Direction.Right, symbol);
 					return newTile;
@@ -146,10 +148,10 @@ namespace MODL3_GoldRush.domain
                 case '░':
                 case ')':
                 case '>':
-                    newTile = new SymbolTile(symbol);
-                    _ship.AddTile(newTile);
+					newTile = new Track(Direction.Right, Direction.Right, '~');
+					CreateShip(symbol, newTile);
                     return newTile;
-                case 'A':
+				case 'A':
 				case 'B':
 				case 'C':
 					newTile = new Hangar(Direction.Null, Direction.Right, symbol);

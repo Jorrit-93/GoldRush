@@ -15,22 +15,46 @@ namespace MODL3_GoldRush.process
 		private InputView _inView;
 		private OutputView _outView;
 		private Map _map;
-		private int timerInterval;
-		private int spawnInterval;
-        private Timer _timer;
+		private int _shipMoving;
+		private int _spawnInterval;
 
-        public Controller()
+		private bool _getInput;
+
+        private Timer _cartTimer;
+		private int _cartTimerInterval;
+
+		private Timer _shipTimer;
+		private int _shipTimerInterval;
+
+		private Timer _timeTimer;
+		private int _timeTimerInterval;
+
+		public Controller()
 		{
 			_inView = new InputView();
 			_outView = new OutputView();
 			LoadMap(); //temp
-			timerInterval = 1000; //temp
-			spawnInterval = 3; //temp
-			CreateTimer(); //temp
-			while (true) //temp
+			_cartTimerInterval = 2000; //temp
+			_shipTimerInterval = 500;
+			_timeTimerInterval = 1000;
+
+			_map.time = _cartTimerInterval / 1000;
+
+			_getInput = true;
+
+			_shipMoving = 0;
+			_spawnInterval = 3; //temp
+
+			CreateCartTimer(); //temp
+			CreateShipTimer(); //temp
+			CreateTimeTimer(); //temp
+
+			_cartTimer.Enabled = true;
+			_timeTimer.Enabled = true;
+
+			while (_getInput) //temp
 			{
 				Switch();
-                _map._ship.LeaveQuay();
 			}
 		}
 
@@ -65,39 +89,81 @@ namespace MODL3_GoldRush.process
 		public void LoadMap()
 		{
 			string[] mapLines;
-			int nr = 0; //temp
+			int nr = 1; //temp
 			mapLines = File.ReadAllLines(@Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Level" + nr + ".txt");
 			_map = new Map(mapLines.Length, mapLines[0].Length);
 			_map.CreateMap(mapLines);
 		}
 
-		public void CreateTimer()
+		public void CreateCartTimer()
 		{
-			_timer = new Timer(timerInterval);
-			_timer.Elapsed += new ElapsedEventHandler(AfterTimer);
-			_timer.Enabled = true;
-			_timer.AutoReset = true;
+			_cartTimer = new Timer(_cartTimerInterval);
+			_cartTimer.Elapsed += new ElapsedEventHandler(AfterCartTimer);
+			_cartTimer.AutoReset = true;
 		}
 
-		public void AfterTimer(Object sender, ElapsedEventArgs e)
+		public void CreateShipTimer()
 		{
-			_timer.Enabled = false;
-			SpawnCart(spawnInterval);
+			_shipTimer = new Timer(_shipTimerInterval);
+			_shipTimer.Elapsed += new ElapsedEventHandler(AfterShipTimer);
+			_shipTimer.AutoReset = true;
+		}
+
+		public void CreateTimeTimer()
+		{
+			_timeTimer = new Timer(_timeTimerInterval);
+			_timeTimer.Elapsed += new ElapsedEventHandler(AfterTimeTimer);
+			_timeTimer.AutoReset = true;
+		}
+
+		public void GameOver()
+		{
+			_cartTimer.Enabled = false;
+			_shipTimer.Enabled = false;
+			_timeTimer.Enabled = false;
+			_getInput = false;
+			Console.Beep();
+			Console.WriteLine();
+			Console.WriteLine("GAME OVER");
+		}
+
+		public void AfterCartTimer(Object sender, ElapsedEventArgs e)
+		{
+			_cartTimer.Enabled = false;
+			SpawnCart(_spawnInterval);
 			Cart removeCart = null;
+			bool gameOver = false;
 			foreach (Cart c in _map.cartList)
 			{
 				switch (c.tile.MoveMovable())
 				{
 					case -1:
-						//gameover
+						gameOver = true;
 						break;
 					case 0:
 						c.tile.movable = null;
 						removeCart = c;
 						break;
 					case 2:
-//						_map._ship.load++;
-						_map.AddScore();
+						_map.score++;
+						_map.shipLoad++;
+						switch (_map.shipLoad)
+						{
+							case 4:
+								_map.shipArray[2].Unload();
+								break;
+							case 8:
+								_map.shipArray[2].Unload();
+								_map.score = _map.score + 10;
+								_map.shipLoad = 0;
+								_shipTimer.Enabled = true;
+								if (_cartTimerInterval > 1000)
+								{
+									_cartTimerInterval = _cartTimerInterval / 2;
+									_cartTimer.Interval = _cartTimerInterval;
+								}
+								break;
+						}
 						break;
 				}
 			}
@@ -106,7 +172,49 @@ namespace MODL3_GoldRush.process
 				_map.cartList.Remove(removeCart);
 			}
 			DrawMap();
-			_timer.Enabled = true;
+			_cartTimer.Enabled = true;
+			if (gameOver)
+			{
+				GameOver();
+			}
+		}
+
+		public void AfterShipTimer(Object sender, ElapsedEventArgs e)
+		{
+			_shipTimer.Enabled = false;
+			for(int index = 0; index < _map.shipArray.Length; index++)
+			{
+				switch (_map.shipArray[index].tile.MoveMovable())
+				{
+					case 0:
+						_map.shipArray[index].tile.movable = null;
+						_map.shipArray[index].tile = _map._firstTile;
+						_map._firstTile.movable = _map.shipArray[index];
+						if(index == 2)
+						{
+							_map.shipArray[index].Unload();
+						}
+						break;
+				}
+			}
+			DrawMap();
+			_shipTimer.Enabled = true;
+			_shipMoving++;
+			if (_shipMoving == _map._width)
+			{
+				_shipMoving = 0;
+				_shipTimer.Enabled = false;
+			}
+		}
+
+		public void AfterTimeTimer(Object sender, ElapsedEventArgs e)
+		{
+			_map.time--;
+			if(_map.time == 0)
+			{
+				_map.time = _cartTimerInterval / 1000;
+			}
+			DrawMap();
 		}
 
 		public void SpawnCart(int interval)
@@ -121,6 +229,14 @@ namespace MODL3_GoldRush.process
 		public void DrawMap()
 		{
 			Console.Clear();
+			string header = _map.time.ToString();
+			for(int index = 0; index < (_map._width - _map.time.ToString().Length - _map.score.ToString().Length); index++)
+			{
+				header = string.Concat(header, " ");
+			}
+			header = string.Concat(header, _map.score);
+			Console.WriteLine(header);
+			Console.WriteLine();
 			Tile firstRowTile = _map._firstTile;
 			Tile secondRowTile = _map._firstTile.downTile;
 			for (int i = 0; i <_map._height; i++)

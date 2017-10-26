@@ -6,27 +6,31 @@ using System.Threading.Tasks;
 
 namespace MODL3_GoldRush.domain
 {
-    public class Ship
+    public class Ship : Movable
     {
-        public List<Tile> _tiles;
-        public int load { get; set; }
-        public Direction shipDirection { get; set; }
+		private int shipLoad;
 
-        public Ship()
+        public Ship(char symbol) : base(symbol, Direction.Right)
         {
-            _tiles = new List<Tile>();
-            load = 0;
-            shipDirection = Direction.Right;
+			shipLoad = 1;
         }
 
-        public void LeaveQuay()
-        {
-            
-        }
-
-        public void AddTile(Tile tile)
-        {
-            _tiles.Add(tile);
-        }
+		public override void Unload()
+		{
+			shipLoad++;
+			switch (shipLoad)
+			{
+				case 1:
+					symbol = '░';
+					break;
+				case 2:
+					symbol = '▒';
+					break;
+				case 3:
+					symbol = '▓';
+					shipLoad = 0;
+					break;
+			}
+		}
     }
 }

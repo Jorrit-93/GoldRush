@@ -14,14 +14,16 @@ namespace MODL3_GoldRush.domain
 
 		public override int AcceptMovable(Track inputTrack)
 		{
-			inputTrack.movable.Unload();
-			return base.AcceptMovable(inputTrack);
-		}
-
-		public override int MoveMovable()
-		{
-			base.MoveMovable();
-			return 2;
+			if (upTile.leftTile.leftTile.movable != null && upTile.rightTile.rightTile.movable != null)
+			{
+				inputTrack.movable.Unload();
+				base.AcceptMovable(inputTrack);
+				return 2;
+			}
+			else
+			{
+				return base.AcceptMovable(inputTrack);
+			}
 		}
 	}
 }
