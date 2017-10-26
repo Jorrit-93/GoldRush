@@ -38,10 +38,16 @@ namespace MODL3_GoldRush.domain
 			cartList.Add(newCart);
 		}
 
-        public void CreateShip()
-        {
-
-        }
+		public void AddScore()
+		{
+			_score++;
+//			_ship.load++;
+//			if(_ship.load == 8)
+//			{
+//				_ship.LeaveQuay();
+//				_score = _score + 10;
+//			}
+		}
 
 		public void CreateMap(string[] mapLines)
 		{

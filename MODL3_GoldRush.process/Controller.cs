@@ -24,7 +24,7 @@ namespace MODL3_GoldRush.process
 			_inView = new InputView();
 			_outView = new OutputView();
 			LoadMap(); //temp
-			timerInterval = 2000; //temp
+			timerInterval = 1000; //temp
 			spawnInterval = 3; //temp
 			CreateTimer(); //temp
 			while (true) //temp
@@ -92,7 +92,12 @@ namespace MODL3_GoldRush.process
 						//gameover
 						break;
 					case 0:
+						c.tile._cart = null;
 						removeCart = c;
+						break;
+					case 2:
+//						_map._ship.load++;
+						_map.AddScore();
 						break;
 				}
 			}

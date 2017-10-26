@@ -59,7 +59,6 @@ namespace MODL3_GoldRush.domain
 			{
 				return nextTile.AcceptCart(this);
 			}
-			_cart = null;
 			return 0;
 		}
 
