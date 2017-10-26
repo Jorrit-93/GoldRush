@@ -16,6 +16,7 @@ namespace MODL3_GoldRush.domain
 		public List<Tile> switchList;
 
 		public Tile _firstTile;
+        public Ship _ship;
 		public int _height;
 		public int _width;
 
@@ -26,6 +27,7 @@ namespace MODL3_GoldRush.domain
 			cartList = new List<Cart>();
 			hangarList = new List<Tile>();
 			switchList = new List<Tile>();
+            _ship = new Ship();
 		}
 
 		public void CreateCart(int hangarIndex)
@@ -35,6 +37,11 @@ namespace MODL3_GoldRush.domain
 			hangarList[hangarIndex]._cart = newCart;
 			cartList.Add(newCart);
 		}
+
+        public void CreateShip()
+        {
+
+        }
 
 		public void CreateMap(string[] mapLines)
 		{
@@ -128,14 +135,22 @@ namespace MODL3_GoldRush.domain
                     newTile = new OutSwitch(Direction.Right, Direction.Down, symbol);
 					switchList.Add(newTile);
 					return newTile;
-				case 'A':
+                case '<':
+                case '(':
+                case '░':
+                case ')':
+                case '>':
+                    newTile = new SymbolTile(symbol);
+                    _ship.AddTile(newTile);
+                    return newTile;
+                case 'A':
 				case 'B':
 				case 'C':
 					newTile = new Hangar(Direction.Null, Direction.Right, symbol);
 					hangarList.Add(newTile);
 					return newTile;
 				default:
-					newTile = new SpaceTile(symbol);
+					newTile = new SymbolTile(symbol);
 					return newTile;
 			}
 		}

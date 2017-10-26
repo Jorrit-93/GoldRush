@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MODL3_GoldRush.domain
 {
-	public class SpaceTile : Tile
+	public class SymbolTile : Tile
 	{
-		public SpaceTile(char symbol) : base(symbol)
+		public SymbolTile(char symbol) : base(symbol)
 		{
 		}
 

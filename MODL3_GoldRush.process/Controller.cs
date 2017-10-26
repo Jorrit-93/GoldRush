@@ -30,6 +30,7 @@ namespace MODL3_GoldRush.process
 			while (true) //temp
 			{
 				Switch();
+                _map._ship.LeaveQuay();
 			}
 		}
 
