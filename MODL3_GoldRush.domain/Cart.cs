@@ -6,19 +6,13 @@ using System.Threading.Tasks;
 
 namespace MODL3_GoldRush.domain
 {
-	public class Cart
+	public class Cart : Movable
 	{
-		public char symbol { get; set; }
-		public Direction cartDirection { get; set; }
-		public Tile tile { get; set; }
-
-		public Cart()
+		public Cart() : base('0', Direction.Right)
 		{
-			symbol = '0';
-			cartDirection = Direction.Right;
 		}
 
-		public void Unload()
+		public override void Unload()
 		{
 			symbol = 'O';
 		}

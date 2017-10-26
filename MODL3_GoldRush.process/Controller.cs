@@ -37,7 +37,7 @@ namespace MODL3_GoldRush.process
 		public void Switch()
 		{
 			int hangarIndex = CheckInput();
-			if (_map.switchList[hangarIndex]._cart == null)
+			if (_map.switchList[hangarIndex].movable == null)
 			{
 				_map.switchList[hangarIndex].Switch();
 			}
@@ -86,13 +86,13 @@ namespace MODL3_GoldRush.process
 			Cart removeCart = null;
 			foreach (Cart c in _map.cartList)
 			{
-				switch (c.tile.MoveCart())
+				switch (c.tile.MoveMovable())
 				{
 					case -1:
 						//gameover
 						break;
 					case 0:
-						c.tile._cart = null;
+						c.tile.movable = null;
 						removeCart = c;
 						break;
 					case 2:

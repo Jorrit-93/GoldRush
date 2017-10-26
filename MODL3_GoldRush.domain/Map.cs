@@ -34,7 +34,7 @@ namespace MODL3_GoldRush.domain
 		{
 			Cart newCart = new Cart();
 			newCart.tile = hangarList[hangarIndex];
-			hangarList[hangarIndex]._cart = newCart;
+			hangarList[hangarIndex].movable = newCart;
 			cartList.Add(newCart);
 		}
 

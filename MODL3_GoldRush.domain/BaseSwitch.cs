@@ -12,23 +12,23 @@ namespace MODL3_GoldRush.domain
 		{
 		}
 
-		public override int AcceptCart(Track inputTrack)
+		public override int AcceptMovable(Track inputTrack)
 		{
-			if (_cart == null)
+			if (movable == null)
 			{
-				if (inputTrack._cart.cartDirection.Equals(SwitchDirection(_outDirection)))
+				if (inputTrack.movable.direction.Equals(SwitchDirection(_outDirection)))
 				{
 					Direction temp = _inDirection;
 					_inDirection = SwitchDirection(_outDirection);
 					_outDirection = SwitchDirection(temp);
 				}
-				if (inputTrack._cart.cartDirection.Equals(_inDirection))
+				if (inputTrack.movable.direction.Equals(_inDirection))
 				{
-					Cart temp = inputTrack._cart;
-					inputTrack._cart = null;
+					Movable temp = inputTrack.movable;
+					inputTrack.movable = null;
 					temp.tile = this;
-					_cart = temp;
-					_cart.cartDirection = _outDirection;
+					movable = temp;
+					movable.direction = _outDirection;
 					return 1;
 				}
 				return 1;

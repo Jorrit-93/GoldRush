@@ -14,16 +14,16 @@ namespace MODL3_GoldRush.domain
 		public Tile rightTile	{ get; set; }
 		public Tile upTile		{ get; set; }
 		public Tile downTile	{ get; set; }
-		public Cart _cart		{ get; set; }
+		public Movable movable	{ get; set; }
 
 		public Tile(char symbol)
 		{
 			_symbol = symbol;
 		}
 
-		public abstract int AcceptCart(Track inputTrack);
+		public abstract int AcceptMovable(Track inputTrack);
 
-		public abstract int MoveCart();
+		public abstract int MoveMovable();
 
         public abstract void Switch();
 

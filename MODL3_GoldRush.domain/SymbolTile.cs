@@ -12,12 +12,12 @@ namespace MODL3_GoldRush.domain
 		{
 		}
 
-		public override int AcceptCart(Track inputTrack)
+		public override int AcceptMovable(Track inputTrack)
 		{
 			return 1;
 		}
 
-		public override int MoveCart()
+		public override int MoveMovable()
 		{
 			throw new NotImplementedException();
 		}

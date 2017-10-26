@@ -12,15 +12,15 @@ namespace MODL3_GoldRush.domain
 		{
 		}
 
-		public override int AcceptCart(Track inputTrack)
+		public override int AcceptMovable(Track inputTrack)
 		{
-			inputTrack._cart.Unload();
-			return base.AcceptCart(inputTrack);
+			inputTrack.movable.Unload();
+			return base.AcceptMovable(inputTrack);
 		}
 
-		public override int MoveCart()
+		public override int MoveMovable()
 		{
-			base.MoveCart();
+			base.MoveMovable();
 			return 1;
 		}
 	}
