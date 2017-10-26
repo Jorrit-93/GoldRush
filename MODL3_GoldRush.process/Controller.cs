@@ -35,7 +35,7 @@ namespace MODL3_GoldRush.process
 			_inView = new InputView();
 			_outView = new OutputView();
 			LoadMap();  
-			_cartTimerInterval = 2000;  
+			_cartTimerInterval = 4000;  
 			_shipTimerInterval = 500;
 			_timeTimerInterval = 1000;
 
@@ -163,7 +163,7 @@ namespace MODL3_GoldRush.process
 								_shipTimer.Enabled = true;
 								if (_cartTimerInterval > 1000)
 								{
-									_cartTimerInterval = _cartTimerInterval / 2;
+									_cartTimerInterval = _cartTimerInterval - 1000;
 									_cartTimer.Interval = _cartTimerInterval;
 								}
 								break;
